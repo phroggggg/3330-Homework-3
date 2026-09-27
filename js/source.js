@@ -156,7 +156,6 @@ $(function () {
     }
     loadCustomers();
 
-    // ---------- System status list ----------
     function loadSystemStatus() {
         messages.forEach(message => {
             const listItem = $("<li>");
@@ -166,7 +165,6 @@ $(function () {
     }
     loadSystemStatus();
 
-    // ---------- Notifications list ----------
     function loadNotifications() {
         notifications.forEach(notification => {
             const listItem = $("<li>");
@@ -176,7 +174,6 @@ $(function () {
     }
     loadNotifications();
 
-    // ---------- Tasks list ----------
     function loadTasks() {
         tasks.forEach(task => {
             const listItem = $("<li>");
@@ -185,7 +182,52 @@ $(function () {
         });
     }
     loadTasks();
-       
+
+    var dashboardTabs, accordion, customerDialog, newCustomerButton, customerDate;
+
+    dashboardTabs = $('#dashboardTabs');
+    accordion = $('#accordion');
+    customerDialog = $('#customerDialog');
+    newCustomerButton = $('#newCustomerButton');
+    customerDate = $('#customerDate');
+
+    $("button").button();
+
+    dashboardTabs.tabs();
+
+    accordion.accordion({
+        collapsible: true,
+        heightStyle: "content"
+    });
+
+    customerDialog.dialog({
+        autoOpen: false,
+        modal: true,
+        width: 450,
+        buttons: {
+            "Create Customer": function () {
+                var name = $("#customerName").val();
+                var email = $("#customerEmail").val();
+                if (!name || !email) {
+                    alert(
+                        "Please enter a name and email."
+                    );
+                    return;
+                }
+                alert("Customer created: " + name);
+                $(this).dialog("close");
+            },
+            "Cancel": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    newCustomerButton.on("click", function () {
+        customerDialog.dialog("open");
+    });
+
+    customerDate.datepicker();
 
 
 });
