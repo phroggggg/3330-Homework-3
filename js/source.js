@@ -99,9 +99,52 @@ $(function () {
     // Do not modify the JS objects above. You will write your code below.
     // *********************************************************************
 
+    var usernameSpan, revenueSpans, customerNumSpan, ordersAmtSpan, issuesAmtSpan, notifNumSpan;
+    var salesTableBody, activityList, customerTableBody, systemStatusList, notificationsList, tasksList;
 
+    usernameSpan = $('#username');
+    revenueSpans = $('.revenue-amt');
+    customerNumSpan = $('#customer-num');
+    ordersAmtSpan = $('#orders-amt');
+    issuesAmtSpan = $('#issues-amt');
+    notifNumSpan = $('#notification-num');
+
+    salesTableBody = $('#salesTableBody');
+    activityList = $('#activity-list');
+    customerTableBody = $('#customerTableBody');
+    systemStatusList = $('#system-status-list');
+    notificationsList = $('#notifications-list');
+    tasksList = $('#tasks-list');
+
+    function loadStats() {
+        usernameSpan.text(username);
+        revenueSpans.text(revenueAmt);
+        customerNumSpan.text(customerNum);
+        ordersAmtSpan.text(ordersAmt);
+        issuesAmtSpan.text(issuesAmt);
+        notifNumSpan.text(notifAmt);
+    }
+    loadStats();
+
+    function loadSales() {
+        sales.forEach(sale => {
+            const row = $("<tr>");
+            row.html(`<td>${sale.product}</td><td>${sale.quantity}</td><td>${sale.revenue}</td>`);
+            salesTableBody.append(row);
+        });
+    }
+    loadSales();
+
+    function loadActivities() {
+        activities.forEach(activity => {
+            const listItem = $("<li>");
+            listItem.html(`${activity.message}`);
+            activityList.append(listItem);
+        });
+    }
+    loadActivities();
 
        
 
 
-    });
+});
