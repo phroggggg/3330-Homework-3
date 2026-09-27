@@ -144,6 +144,47 @@ $(function () {
     }
     loadActivities();
 
+    function loadCustomers() {
+        customers.forEach(customer => {
+            const statusClass = customer.status === "Active" ? "status-active" : "status-pending";
+            const row = $("<tr>");
+            row.html(`<td>${customer.name}</td><td>${customer.email}</td>
+                <td><span class="status ${statusClass}">${customer.status}</span></td>
+                <td>${customer.joined}</td>`);
+            customerTableBody.append(row);
+        });
+    }
+    loadCustomers();
+
+    // ---------- System status list ----------
+    function loadSystemStatus() {
+        messages.forEach(message => {
+            const listItem = $("<li>");
+            listItem.html(`${message.messsage}`);
+            systemStatusList.append(listItem);
+        });
+    }
+    loadSystemStatus();
+
+    // ---------- Notifications list ----------
+    function loadNotifications() {
+        notifications.forEach(notification => {
+            const listItem = $("<li>");
+            listItem.html(`${notification.messsage}`);
+            notificationsList.append(listItem);
+        });
+    }
+    loadNotifications();
+
+    // ---------- Tasks list ----------
+    function loadTasks() {
+        tasks.forEach(task => {
+            const listItem = $("<li>");
+            listItem.html(`${task.messsage}`);
+            tasksList.append(listItem);
+        });
+    }
+    loadTasks();
        
 
 
