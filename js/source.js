@@ -99,9 +99,135 @@ $(function () {
     // Do not modify the JS objects above. You will write your code below.
     // *********************************************************************
 
+    var usernameSpan, revenueSpans, customerNumSpan, ordersAmtSpan, issuesAmtSpan, notifNumSpan;
+    var salesTableBody, activityList, customerTableBody, systemStatusList, notificationsList, tasksList;
 
+    usernameSpan = $('#username');
+    revenueSpans = $('.revenue-amt');
+    customerNumSpan = $('#customer-num');
+    ordersAmtSpan = $('#orders-amt');
+    issuesAmtSpan = $('#issues-amt');
+    notifNumSpan = $('#notification-num');
 
-       
+    salesTableBody = $('#salesTableBody');
+    activityList = $('#activity-list');
+    customerTableBody = $('#customerTableBody');
+    systemStatusList = $('#system-status-list');
+    notificationsList = $('#notifications-list');
+    tasksList = $('#tasks-list');
 
+    function loadStats() {
+        usernameSpan.text(username);
+        revenueSpans.text(revenueAmt);
+        customerNumSpan.text(customerNum);
+        ordersAmtSpan.text(ordersAmt);
+        issuesAmtSpan.text(issuesAmt);
+        notifNumSpan.text(notifAmt);
+    }
+    loadStats();
 
+    function loadSales() {
+        sales.forEach(sale => {
+            const row = $("<tr>");
+            row.html(`<td>${sale.product}</td><td>${sale.quantity}</td><td>${sale.revenue}</td>`);
+            salesTableBody.append(row);
+        });
+    }
+    loadSales();
+
+    function loadActivities() {
+        activities.forEach(activity => {
+            const listItem = $("<li>");
+            listItem.html(`${activity.message}`);
+            activityList.append(listItem);
+        });
+    }
+    loadActivities();
+
+    function loadCustomers() {
+        customers.forEach(customer => {
+            const statusClass = customer.status === "Active" ? "status-active" : "status-pending";
+            const row = $("<tr>");
+            row.html(`<td>${customer.name}</td><td>${customer.email}</td>
+                <td><span class="status ${statusClass}">${customer.status}</span></td>
+                <td>${customer.joined}</td>`);
+            customerTableBody.append(row);
+        });
+    }
+    loadCustomers();
+
+    function loadSystemStatus() {
+        messages.forEach(message => {
+            const listItem = $("<li>");
+            listItem.html(`${message.messsage}`);
+            systemStatusList.append(listItem);
+        });
+    }
+    loadSystemStatus();
+
+    function loadNotifications() {
+        notifications.forEach(notification => {
+            const listItem = $("<li>");
+            listItem.html(`${notification.messsage}`);
+            notificationsList.append(listItem);
+        });
+    }
+    loadNotifications();
+
+    function loadTasks() {
+        tasks.forEach(task => {
+            const listItem = $("<li>");
+            listItem.html(`${task.messsage}`);
+            tasksList.append(listItem);
+        });
+    }
+    loadTasks();
+
+    var dashboardTabs, accordion, customerDialog, newCustomerButton, customerDate;
+
+    dashboardTabs = $('#dashboardTabs');
+    accordion = $('#accordion');
+    customerDialog = $('#customerDialog');
+    newCustomerButton = $('#newCustomerButton');
+    customerDate = $('#customerDate');
+
+    $("button").button();
+
+    dashboardTabs.tabs();
+
+    accordion.accordion({
+        collapsible: true,
+        heightStyle: "content"
     });
+
+    customerDialog.dialog({
+        autoOpen: false,
+        modal: true,
+        width: 450,
+        buttons: {
+            "Create Customer": function () {
+                var name = $("#customerName").val();
+                var email = $("#customerEmail").val();
+                if (!name || !email) {
+                    alert(
+                        "Please enter a name and email."
+                    );
+                    return;
+                }
+                alert("Customer created: " + name);
+                $(this).dialog("close");
+            },
+            "Cancel": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    newCustomerButton.on("click", function () {
+        customerDialog.dialog("open");
+    });
+
+    customerDate.datepicker();
+
+
+});
